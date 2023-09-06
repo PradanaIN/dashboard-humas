@@ -1,0 +1,75 @@
+<?php
+defined('BASEPATH') OR exit('No direct script access allowed');
+
+class Internal extends CI_Controller
+{
+	// form validation library
+	public function __construct()
+	{
+		parent::__construct();
+		$this->load->model("internal_model");
+		$this->load->library('form_validation');
+	}
+
+	public function index() 
+	{
+		$data['title'] = 'Internal';
+		$data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+		$data["internal"] = $this->internal_model->getAll();
+
+		// dump and die (dd)
+		$this->load->view('templates/header');
+		$this->load->view('repository/internal/index', $data);
+		$this->load->view('templates/footer');
+	}
+
+	// add new data
+	public function add()
+	{
+		$internal = $this->internal_model;
+		$validation = $this->form_validation;
+		$validation->set_rules($internal->rules());
+
+		if ($validation->run()) {
+			$internal->save();
+			$this->session->set_flashdata('success', 'Berhasil disimpan');
+		}
+
+		$this->load->view('templates/header');
+		$this->load->view('repository/internal/add');
+		$this->load->view('templates/footer');
+	}
+
+	// edit data
+	public function edit($id = null)
+	{
+		if (!isset($id)) redirect('internal/index');
+
+		$internal = $this->internal_model;
+		$validation = $this->form_validation;
+		$validation->set_rules($internal->rules());
+
+		if ($validation->run()) {
+			$internal->update();
+			$this->session->set_flashdata('success', 'Berhasil disimpan');
+		}
+
+		$data["internal"] = $internal->getById($id);
+		if (!$data["internal"]) show_404();
+
+		$this->load->view('templates/header');
+		$this->load->view('repository/internal/edit', $data);
+		$this->load->view('templates/footer');
+	}
+
+	// delete data
+	public function delete($id = null)
+	{
+		if (!isset($id)) show_404();
+
+		if ($this->internal_model->delete($id)) {
+			redirect('internal/index');
+		}
+	}
+
+}
