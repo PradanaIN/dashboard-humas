@@ -1,8 +1,8 @@
 <div id="layoutSidenav_content">
 	<main>
 		<div class="container-fluid px-4">
-			<h1 class="mt-4">Repository Internal</h1>
-			<ol class="breadcrumb mb-4">
+
+			<ol class="breadcrumb mb-3 mt-3">
 				<li class="breadcrumb-item">Repository</li>
 				<li class="breadcrumb-item">Internal</li>
 				<li class="breadcrumb-item active">Add</li>

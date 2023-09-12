@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class UserList extends CI_Controller
+class Schedule extends CI_Controller
 {
 
     public function index()

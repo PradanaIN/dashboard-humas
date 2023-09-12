@@ -9,6 +9,7 @@ class Internal extends CI_Controller
 		parent::__construct();
 		$this->load->model("internal_model");
 		$this->load->library('form_validation');
+		$this->load->helper('download');
 	}
 
 	public function index() 
@@ -32,7 +33,8 @@ class Internal extends CI_Controller
 
 		if ($validation->run()) {
 			$internal->save();
-			$this->session->set_flashdata('success', 'Berhasil disimpan');
+			$this->session->set_flashdata('success', 'Berhasil ditambahkan!');
+			redirect('internal/index');
 		}
 
 		$this->load->view('templates/header');
@@ -51,7 +53,8 @@ class Internal extends CI_Controller
 
 		if ($validation->run()) {
 			$internal->update();
-			$this->session->set_flashdata('success', 'Berhasil disimpan');
+			$this->session->set_flashdata('success', 'Berhasil disimpan!');
+			redirect('internal/index');
 		}
 
 		$data["internal"] = $internal->getById($id);
@@ -68,8 +71,19 @@ class Internal extends CI_Controller
 		if (!isset($id)) show_404();
 
 		if ($this->internal_model->delete($id)) {
+			$this->session->set_flashdata('success', 'Berhasil dihapus!');
 			redirect('internal/index');
 		}
 	}
+
+	// download file
+	public function download($id)
+	{
+		$internal = $this->internal_model->getById($id);
+		$file = 'upload/internal/'.$internal->file;
+		force_download($file, NULL);
+	}
+
+
 
 }

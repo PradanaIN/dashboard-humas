@@ -1,8 +1,8 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Internal_model extends CI_Model
+class Metadata_model extends CI_Model
 {
-    private $_table = "internal";
+    private $_table = "metadata";
 
 	public $id;
 	public $file;
@@ -51,14 +51,14 @@ class Internal_model extends CI_Model
 		$this->kegiatan = $post["kegiatan"];
 		$this->tempat = $post["tempat"];
 		$this->tanggal = $post["tanggal"];
-		$this->category_id = 1;
+		// $this->category_id = 1;
 		$this->db->insert($this->_table, $this);
 	}
 
 	// upload file
 	private function _uploadFile()
 	{
-		$config['upload_path']          = './upload/internal/';
+		$config['upload_path']          = './upload/metadata/';
 		$config['allowed_types']        = 'pdf|doc|docx|xls|xlsx|ppt|pptx';
 		$config['overwrite']            = true;
 		$config['max_size']             = 102400; // 100MB
@@ -97,7 +97,7 @@ class Internal_model extends CI_Model
 		$this->kegiatan = $post["kegiatan"];
 		$this->tempat = $post["tempat"];
 		$this->tanggal = $post["tanggal"];
-		$this->category_id = 1;
+		// $this->category_id = 1;
 		$this->db->update($this->_table, $this, array('id' => $post['id']));
 	}
 
@@ -110,10 +110,10 @@ class Internal_model extends CI_Model
 
 	private function _deleteFile($id)
 	{
-		$internal = $this->getById($id);
+		$metadata = $this->getById($id);
 		
-		$filename = explode(".", $internal->file)[0];
-		return array_map('unlink', glob("./upload/internal/$filename.*"));
+		$filename = explode(".", $metadata->file)[0];
+		return array_map('unlink', glob("./upload/metadata/$filename.*"));
 	}
 
 }

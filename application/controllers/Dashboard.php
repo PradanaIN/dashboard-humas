@@ -9,7 +9,14 @@ class Dashboard extends CI_Controller
 		$data['title'] = 'Dashboard';
 		$data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
 
-		$this->load->view('templates/header');
+		// get user name from session
+		$data['name'] = $this->session->userdata('name');
+
+		$data['total_internal'] = $this->db->get_where('internal')->num_rows();
+		$data['total_eksternal'] = $this->db->get_where('eksternal')->num_rows();
+		$data['total_metadata'] = $this->db->get_where('metadata')->num_rows();
+
+		$this->load->view('templates/header', $data);
 		$this->load->view('dashboard/index', $data);
 		$this->load->view('templates/footer');
 	}

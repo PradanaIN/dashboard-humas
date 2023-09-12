@@ -1,8 +1,14 @@
 <div id="layoutSidenav_content">
     <main>
         <div class="container-fluid px-4">
-            <h1 class="mt-4" style="color: #73a1b2">Sugeng Rawuh!</h1>
-            <ol class="breadcrumb mb-4">
+
+			<div class="flash-data" data-flashdata="<?= $this->session->flashdata('success'); ?>"></div>
+			<?php if ($this->session->flashdata('success')) : ?>
+				<?php unset($_SESSION['success']); ?>
+			<?php endif; ?>
+
+
+            <ol class="breadcrumb mb-3 mt-3">
                 <li class="breadcrumb-item">Repository</li>
                 <li class="breadcrumb-item active">Internal</li>
             </ol>
@@ -47,10 +53,12 @@
                                     <td><?= $row->tempat; ?></td>
                                     <td><?= $row->tanggal; ?></td>
                                     <td>
-                                        <a href="<?= base_url('internal/edit/' . $row->id) ?>" class="btn btn-sm btn-primary">Edit</a>
-                                        <a href="<?= base_url('internal/delete/' . $row->id) ?>" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this item?')">Hapus</a>
-
-                                    </td>
+										<div class="d-flex justify-content-around">
+											<a href="<?= base_url('internal/edit/'.$row->id) ?>" class="btn btn-sm btn-primary"><i class="fa-solid fa-pen-to-square"></i></a>
+											<a href="<?= base_url('internal/delete/'.$row->id) ?>" class="btn btn-sm btn-danger btn-delete"><i class="fa-solid fa-trash"></i></a>
+											<a href="<?= base_url('internal/download/'.$row->id) ?>" class="btn btn-sm btn-success btn-download"><i class="fa-solid fa-file-arrow-down"></i></a>
+										</div>
+									</td>
                                 <?php $no++;
                             endforeach; ?>
                                 </tr>
