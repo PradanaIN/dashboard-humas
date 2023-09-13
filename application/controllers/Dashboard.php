@@ -16,7 +16,7 @@ class Dashboard extends CI_Controller
 		$data['total_eksternal'] = $this->db->get_where('eksternal')->num_rows();
 		$data['total_metadata'] = $this->db->get_where('metadata')->num_rows();
 
-		$this->load->view('templates/header', $data);
+		$this->load->view('templates/header');
 		$this->load->view('dashboard/index', $data);
 		$this->load->view('templates/footer');
 	}
