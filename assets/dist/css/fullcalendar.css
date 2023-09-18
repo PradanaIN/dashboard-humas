@@ -1,0 +1,14 @@
+.fc .fc-col-header-cell-cushion, .fc-daygrid-day-number, .fc-event-time, .fc-event-title {
+    color: black;
+}
+
+.modal fade {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-dialog {
+    max-width: 100%;
+}
+
