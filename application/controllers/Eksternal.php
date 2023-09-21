@@ -9,6 +9,7 @@ class Eksternal extends CI_Controller
 		parent::__construct();
 		$this->load->model("eksternal_model");
 		$this->load->library('form_validation');
+		$this->load->helper('download');
 	}
 
 	public function index() 
@@ -75,6 +76,12 @@ class Eksternal extends CI_Controller
 		}
 	}
 
-	
+	// download file
+	public function download($id)
+	{
+		$eksternal = $this->eksternal_model->getById($id);
+		$file = 'upload/eksternal/'.$eksternal->file;
+		force_download($file, NULL);
+	}
 
 }

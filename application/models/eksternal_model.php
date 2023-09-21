@@ -7,9 +7,9 @@ class Eksternal_model extends CI_Model
 	public $id;
 	public $file;
 	public $kegiatan;
+	public $tema;
 	public $tempat;
 	public $tanggal;
-	public $category_id;
 	
 	// rules
 	public function rules()
@@ -26,6 +26,10 @@ class Eksternal_model extends CI_Model
 			['field' => 'tanggal',
 			'label' => 'Tanggal',
 			'rules' => 'required'],
+
+			['field' => 'tema',
+			'label' => 'Tema',
+			'rules' => 'required']
 		];
 	}
 
@@ -49,9 +53,9 @@ class Eksternal_model extends CI_Model
 		$this->id = uniqid();
 		$this->file = $this->_uploadFile();
 		$this->kegiatan = $post["kegiatan"];
+		$this->tema = $post["tema"];
 		$this->tempat = $post["tempat"];
 		$this->tanggal = $post["tanggal"];
-		$this->category_id = 2;
 		$this->db->insert($this->_table, $this);
 	}
 
@@ -61,7 +65,7 @@ class Eksternal_model extends CI_Model
 		$config['upload_path']          = './upload/eksternal/';
 		$config['allowed_types']        = 'pdf|doc|docx|xls|xlsx|ppt|pptx';
 		$config['overwrite']            = true;
-		$config['max_size']             = 102400; // 100MB
+		$config['max_size']             = 51200; // 50MB
 	
 		$this->load->library('upload', $config);
 	
@@ -95,9 +99,9 @@ class Eksternal_model extends CI_Model
 		}
 
 		$this->kegiatan = $post["kegiatan"];
+		$this->tema = $post["tema"];
 		$this->tempat = $post["tempat"];
 		$this->tanggal = $post["tanggal"];
-		$this->category_id = 2;
 		$this->db->update($this->_table, $this, array('id' => $post['id']));
 	}
 

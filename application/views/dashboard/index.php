@@ -2,17 +2,17 @@
                 <main>
                     <div class="container-fluid px-4">
                         <div class="sb-card-body">
-                            <h1 class="mt-4" style="color: #73a1b2">Sugeng Rawuh!</h1>
-                            <ol class="breadcrumb mb-4">
+                            <h1 class="mt-3" style="color: #73a1b2">Sugeng Rawuh,  !</h1>
+                            <ol class="breadcrumb mb-3 mt-3">
                                 <li class="breadcrumb-item active" style="color: black;">Dashboard</li>
                             </ol>
                         </div>
                         <div class="row">
                             <div class="col-xl-3 col-md-6">
                                 <div class="card bg-primary text-white mb-4">
-                                    <div class="card-body">10 Kegiatan</div>
+                                    <div class="card-body"><?= $total_kegiatan ?> Kegiatan</div>
                                     <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="<?= base_url('dashboard') ?>">View Details</a>
+                                        <a class="small text-white stretched-link" href="<?= base_url('kegiatan') ?>">View Details</a>
                                         <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                                     </div>
                                 </div>
@@ -45,7 +45,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
+                        <!-- <div class="row">
                             <div class="col-xl-8">
                                 <div class="card mb-4">
                                     <div class="card-header">
@@ -53,7 +53,7 @@
                                         Repository File
                                     </div>
                                     <div class="card-body">
-                                        <!-- tabel -->
+                
                                         <table id="datatablesSimple">
                                             <thead>
                                                 <tr>
@@ -100,7 +100,7 @@
                                         Reminder!
                                     </div>
                                     <div class="card-body">
-                                        <!-- List Kegiatan -->
+                 
                                         <ol class="list-group list-group-numbered">
                                             <li class="list-group-item d-flex justify-content-between align-items-start">
                                                 <div class="ms-2 me-auto">
@@ -127,20 +127,8 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                 </main>
-                <footer class="py-4 bg-light mt-auto">
-                    <div class="container-fluid px-4">
-                        <div class="d-flex align-items-center justify-content-between small">
-                            <div class="text-muted">Copyright &copy; Your Website 2023</div>
-                            <div>
-                                <a href="#">Privacy Policy</a>
-                                &middot;
-                                <a href="#">Terms &amp; Conditions</a>
-                            </div>
-                        </div>
-                    </div>
-                </footer>
             </div>
             </div>

@@ -45,14 +45,14 @@
                             <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                             Dashboard
                         </a>
-                        <div class="sb-sidenav-menu-heading">Schedule</div>
-                        <a class="nav-link" href="<?= base_url('schedule') ?>">
-                            <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                            Schedule
+                        <div class="sb-sidenav-menu-heading">Kegiatan</div>
+                        <a class="nav-link" href="<?= base_url('kegiatan') ?>">
+                            <div class="sb-nav-link-icon"><i class="fas fa-calendar"></i></div>
+                            Kalender
                         </a>
                         <div class="sb-sidenav-menu-heading">Repository</div>
                         <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
-                            <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                            <div class="sb-nav-link-icon"><i class="fas fa-folder"></i></div>
                             File
                             <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                         </a>
@@ -65,7 +65,7 @@
                         </div>
                         <div class="sb-sidenav-menu-heading">User</div>
                         <a class="nav-link" href="<?= base_url('profile') ?>">
-                            <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
+                            <div class="sb-nav-link-icon"><i class="fas fa-user"></i></div>
                             Profile
                         </a>
                         <a class="nav-link" href="<?= base_url('userlist') ?>">

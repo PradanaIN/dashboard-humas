@@ -1,15 +1,10 @@
 <div id="layoutSidenav_content">
                 <main>
-                    <div class="container-fluid px-4">
 
-                        <ol class="breadcrumb mb-4 mt-3">
-                            <li class="breadcrumb-item">Repository</li>
-                            <li class="breadcrumb-item">Metadata</li>
-							<li class="breadcrumb-item active">Add</li>
-                        </ol>
-                        <div class="card mb-4">
+                    <div class="container-fluid px-4">
+                        <div class="card mb-4 mt-3">
 							<div class="card-header d-flex justify-content-between align-items-center">
-								<h6 class="m-0"><i class="fas fa-table me-1"></i> Repository Metadata</h6>
+								<h6 class="m-0"><i class="fas fa-table me-1"></i> Edit File Metadata</h6>
 							</div>
 
 							<div class="card-body">
@@ -23,6 +18,13 @@
 												<input class="form-control <?= form_error('kegiatan') ? 'is-invalid':'' ?>" type="text" id="kegiatan" name="kegiatan" placeholder="Kegiatan" value="<?= $metadata->kegiatan ?>"/>
 												<div class="invalid-feedback">
 													<?= form_error('kegiatan') ?>
+												</div>
+											</div>
+											<div class="form-group">
+												<label for="tema">Tema</label>
+												<input class="form-control <?= form_error('tema') ? 'is-invalid':'' ?>" type="text" id="tema" name="tema" placeholder="Tema" value="<?= $metadata->tema ?>"/>
+												<div class="invalid-feedback">
+													<?= form_error('tema') ?>
 												</div>
 											</div>
 											<div class="form-group">
@@ -48,24 +50,12 @@
 											</div>
 										</div>
 									</div>
-									<button class="btn btn-success" type="submit" name="btn">
+									<button class="btn btn-success mt-3" type="submit" name="btn">
 											Edit
 									</button>
 								</form>	
                         </div>
                     </div>
                 </main>
-                <footer class="py-4 bg-light mt-auto">
-                    <div class="container-fluid px-4">
-                        <div class="d-flex align-items-center justify-content-between small">
-                            <div class="text-muted">Copyright &copy; Your Website 2023</div>
-                            <div>
-                                <a href="#">Privacy Policy</a>
-                                &middot;
-                                <a href="#">Terms &amp; Conditions</a>
-                            </div>
-                        </div>
-                    </div>
-                </footer>
             </div>
         </div>

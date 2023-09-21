@@ -9,6 +9,7 @@ class Metadata extends CI_Controller
 		parent::__construct();
 		$this->load->model("metadata_model");
 		$this->load->library('form_validation');
+		$this->load->helper('download');
 	}
 
 	public function index() 
@@ -73,6 +74,14 @@ class Metadata extends CI_Controller
 			$this->session->set_flashdata('success', 'Berhasil dihapus!');
 			redirect('metadata/index');
 		}
+	}
+
+	// download file
+	public function download($id)
+	{
+		$metadata = $this->metadata_model->getById($id);
+		$file = 'upload/metadata/'.$metadata->file;
+		force_download($file, NULL);
 	}
 
 }
