@@ -75,7 +75,7 @@
 										<option style="color:#FF0000;" value="#FF0000">&#9724; Merah</option>
 									</select>
 							</div>
-						</div>s
+						</div>
 					</div>
 					<div class="form-group">
 						<label for="file[]" class="col-form-label">File Undangan</label>

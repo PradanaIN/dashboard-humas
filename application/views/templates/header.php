@@ -68,9 +68,9 @@
                             <div class="sb-nav-link-icon"><i class="fas fa-user"></i></div>
                             Profile
                         </a>
-                        <a class="nav-link" href="<?= base_url('userlist') ?>">
+                        <a class="nav-link" href="<?= base_url('user') ?>">
                             <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
-                            User List
+                            User
                         </a>
                     </div>
                 </div>
