@@ -1,8 +1,19 @@
-            <div id="layoutSidenav_content">
+<?php 
+
+// apabila user belum login
+if ($this->session->userdata('is_login') != 'true') {
+	redirect('auth');
+} 
+
+?>
+			
+			
+			
+			<div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
                         <div class="sb-card-body">
-                            <h1 class="mt-3" style="color: #73a1b2">Sugeng Rawuh,  !</h1>
+                            <h1 class="mt-3" style="color: #73a1b2">Sugeng Rawuh, <?= $name ?>!</h1>
                             <ol class="breadcrumb mb-3 mt-3">
                                 <li class="breadcrumb-item active" style="color: black;">Dashboard</li>
                             </ol>

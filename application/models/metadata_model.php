@@ -2,7 +2,7 @@
 
 class metadata_model extends CI_Model
 {
-    private $_table = "metadata";
+    private $_table = "kegiatan";
 
 	public $id;
 	public $file;

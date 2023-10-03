@@ -1,3 +1,14 @@
+<?php 
+// apabila user belum login
+if ($this->session->userdata('is_login') != 'true') {
+	redirect('auth');
+} 
+
+// get role_id
+$role_id = $this->session->userdata('role_id');
+
+?>
+
 <style>
     #datatablesSimple th, td {
         text-align: center;
@@ -21,9 +32,11 @@
             <div class="card mb-4 mt-4">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <h6 class="m-0"><i class="fas fa-folder me-1"></i> File Eksternal</h6>
+					<?php if ($role_id == 1) : ?>
                     <button type="button" class="btn btn-primary btn-sm" aria-pressed="false" data-toggle="modal" data-target="#UploadModal">
 						<h6 class="m-0"><i class="fas fa-plus me-1"></i> Tambah File</h6>
                     </button>
+					<?php endif; ?>
                 </div>
                 <div class="card-body">
                     <table id="datatablesSimple">

@@ -80,65 +80,15 @@ class Kegiatan extends CI_Controller
 	}
 
 	// download
-	public function download_0($id, $filename)
+	public function download($id, $filename)
 	{
-		$kegiatan = $this->kegiatan_model->getById($id);
-    
-		if ($kegiatan) {
-
-        $fileList = explode(',', $kegiatan->file);
-
-        $file = trim($fileList[0]);
-
-        if (!empty($file) && $file === $filename) {
-            $file_path = 'upload/internal/' . $file;
-            if (file_exists($file_path)) {
-                force_download($file_path, NULL);
-			} else {
-				$this->session->set_flashdata('error', 'File tidak ditemukan!');
-				redirect('kegiatan/detail/' . $id);
-			}
+        $file_path = 'upload/internal/' . $filename;
+        if (file_exists($file_path)) {
+            force_download($file_path, NULL);
+		} else {
+			$this->session->set_flashdata('error', 'File tidak ditemukan!');
+			redirect('kegiatan/detail/' . $id);
 		}
-	}}
-	public function download_1($id, $filename)
-	{
-		$kegiatan = $this->kegiatan_model->getById($id);
-	
-		if ($kegiatan) {
-
-		$fileList = explode(',', $kegiatan->file);
-
-		$file = trim($fileList[1]);
-
-		if (!empty($file) && $file === $filename) {
-			$file_path = 'upload/internal/' . $file;
-			if (file_exists($file_path)) {
-				force_download($file_path, NULL);
-			} else {
-				$this->session->set_flashdata('error', 'File tidak ditemukan!');
-				redirect('kegiatan/detail/' . $id);
-			}
-		}
-	}}
-	public function download_2($id, $filename)
-	{
-		$kegiatan = $this->kegiatan_model->getById($id);
-	
-		if ($kegiatan) {
-
-		$fileList = explode(',', $kegiatan->file);
-
-		$file = trim($fileList[2]);
-
-		if (!empty($file) && $file === $filename) {
-			$file_path = 'upload/internal/' . $file;
-			if (file_exists($file_path)) {
-				force_download($file_path, NULL);
-			} else {
-				$this->session->set_flashdata('error', 'File tidak ditemukan!');
-				redirect('kegiatan/detail/' . $id);
-			}
-		}
-	}}
+	}
 
 }

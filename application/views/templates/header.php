@@ -1,3 +1,10 @@
+<?php
+
+// get user role_id
+$role_id = $this->session->userdata('role_id');
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -39,44 +46,63 @@
         <div id="layoutSidenav_nav">
             <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                 <div class="sb-sidenav-menu">
-                    <div class="nav">
-                        <div class="sb-sidenav-menu-heading">Main</div>
-                        <a class="nav-link" href="<?= base_url('dashboard') ?>">
-                            <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                            Dashboard
-                        </a>
-                        <div class="sb-sidenav-menu-heading">Kegiatan</div>
-                        <a class="nav-link" href="<?= base_url('kegiatan') ?>">
-                            <div class="sb-nav-link-icon"><i class="fas fa-calendar"></i></div>
-                            Kalender
-                        </a>
-                        <div class="sb-sidenav-menu-heading">Repository</div>
-                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
-                            <div class="sb-nav-link-icon"><i class="fas fa-folder"></i></div>
-                            File
-                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                        </a>
-                        <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
-                            <nav class="sb-sidenav-menu-nested nav">
-                                <a class="nav-link" href="<?= base_url('internal') ?>">Internal</a>
-                                <a class="nav-link" href="<?= base_url('eksternal') ?>">Eksternal</a>
-                                <a class="nav-link" href="<?= base_url('metadata') ?>">Metadata</a>
-                            </nav>
-                        </div>
-                        <div class="sb-sidenav-menu-heading">User</div>
-                        <a class="nav-link" href="<?= base_url('profile') ?>">
-                            <div class="sb-nav-link-icon"><i class="fas fa-user"></i></div>
-                            Profile
-                        </a>
-                        <a class="nav-link" href="<?= base_url('user') ?>">
-                            <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
-                            User
-                        </a>
-                    </div>
-                </div>
-                <div class="sb-sidenav-footer">
-                    <div class="small">Logged in as:</div>
-                    
+				<div class="nav">
+					<div class="sb-sidenav-menu-heading">Main</div>
+					<a class="nav-link" href="<?= base_url('dashboard') ?>">
+						<div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+							Dashboard
+					</a>
+
+					<?php
+
+					// Menampilkan menu Kegiatan hanya untuk Admin dan Kepala
+					if ($role_id == 1 || $role_id == 2) {
+						echo '<div class="sb-sidenav-menu-heading">Kegiatan</div>';
+						echo '<a class="nav-link" href="' . base_url('kegiatan') . '">';
+						echo '<div class="sb-nav-link-icon"><i class="fas fa-calendar"></i></div>';
+						echo 'Kalender</a>';
+					}
+
+						// Menampilkan menu Repository
+						echo '<div class="sb-sidenav-menu-heading">Repository</div>';
+						echo '<a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">';
+						echo '<div class="sb-nav-link-icon"><i class="fas fa-folder"></i></div>';
+						echo 'File<div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>';
+						echo '</a>';
+
+					// Menampilkan submenu Internal dan Metadata untuk Admin dan Kepala
+					if ($role_id == 1 || $role_id == 2) {
+						echo '<div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">';
+						echo '<nav class="sb-sidenav-menu-nested nav">';
+						echo '<a class="nav-link" href="' . base_url('internal') . '">Internal</a>';
+						echo '<a class="nav-link" href="' . base_url('metadata') . '">Metadata</a>';
+						echo '<a class="nav-link" href="' . base_url('eksternal') . '">Eksternal</a>';
+						echo '</nav>';
+						echo '</div>';
+					} else if ($role_id == 3) {
+						echo '<div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">';
+						echo '<nav class="sb-sidenav-menu-nested nav">';
+						echo '<a class="nav-link" href="' . base_url('internal') . '">Internal</a>';
+						echo '</nav>';
+						echo '</div>';
+					}
+
+					// Menampilkan menu Profile untuk Admin, Kepala, dan User
+					if ($role_id == 1 || $role_id == 2 || $role_id == 3) {
+						echo '<div class="sb-sidenav-menu-heading">Others</div>';
+						echo '<a class="nav-link" href="' . base_url('profile') . '">';
+						echo '<div class="sb-nav-link-icon"><i class="fas fa-user"></i></div>';
+						echo 'Profile</a>';
+					}
+
+					// Menampilkan menu User hanya untuk Admin
+					if ($role_id == 1) {
+						echo '<a class="nav-link" href="' . base_url('user') . '">';
+						echo '<div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>';
+						echo 'User</a>';
+					}
+					?>
+					</div>
                 </div>
             </nav>
         </div>

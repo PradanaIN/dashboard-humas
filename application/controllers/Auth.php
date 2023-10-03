@@ -19,13 +19,17 @@ class Auth extends CI_Controller {
 		// if form validation fails
 		if ($this->form_validation->run() == false) {
 			$data['title'] = "Login";
-			$this->load->view('templates/auth_header');
 			$this->load->view('auth/login');
-			$this->load->view('templates/auth_footer');	
 		} else {
 			// if form validation success
 			$this->_login();
 		}
+
+		// if user already logged in = is_login == true
+
+		if ($this->session->userdata('is_login') == 'true') {
+			redirect('dashboard');
+		} 
 	} 
 
 	private function _login() 
@@ -46,7 +50,10 @@ class Auth extends CI_Controller {
 					// set session
 					$data = [
 						'email' => $user['email'],
-						'role_id' => $user['role_id']
+						'role_id' => $user['role_id'],
+						'name' => $user['name'],
+						'image' => $user['image'],
+						'is_login' => 'true'
 					];
 
 					$this->session->set_userdata($data);
@@ -70,45 +77,14 @@ class Auth extends CI_Controller {
 		}
 	}
 
-	public function registration()
-	{
-
-		// set rules for form validation
-		$this->form_validation->set_rules('name', 'name', 'required|trim');
-		$this->form_validation->set_rules('email', 'email', 'required|trim|valid_email|is_unique[user.email]', [
-			'is_unique' => 'Email sudah terdaftar!'
-		]);
-		$this->form_validation->set_rules('password', 'password', 'required|trim|min_length[3]|matches[cpassword]', [
-			'matches' => 'Password tidak sama!',
-			'min_length' => 'Password terlalu pendek!'
-		]);
-		$this->form_validation->set_rules('cpassword', 'cpassword', 'required|trim|matches[password]');
-
-		if ($this->form_validation->run() == false) {
-			$this->load->view('templates/auth_header');
-			$this->load->view('auth/registration');
-			$this->load->view('templates/auth_footer');	
-		} else {
-			$data = [
-				'name' => htmlspecialchars($this->input->post('name', true)), // true for XSS
-				'email' => htmlspecialchars($this->input->post('email', true)), // true for XSS
-				'password' => password_hash($this->input->post('password'), PASSWORD_DEFAULT), // default password hashing
-				'image' => 'default.jpg',
-				'role_id' => 3,
-				'date_created' => time(),
-				'is_active' => 1
-			];  
-
-			$this->db->insert('user', $data);
-			$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Akun berhasil dibuat!</div>');
-			redirect('auth');
-		}
-	}
-
 	public function logout() {
 		// unset session
 		$this->session->unset_userdata('email');
+		$this->session->unset_userdata('is_login');
 		$this->session->unset_userdata('role_id');
+
+		// destroy session
+		$this->session->sess_destroy();
 
 		// set flashdata
 		$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Berhasil logout!</div>');

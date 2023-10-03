@@ -2,7 +2,7 @@
 
 class Internal_model extends CI_Model
 {
-    private $_table = "internal";
+    private $_table = "kegiatan";
 
 	public $id;
 	public $file;

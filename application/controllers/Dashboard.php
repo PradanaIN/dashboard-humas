@@ -9,8 +9,8 @@ class Dashboard extends CI_Controller
 		$data['title'] = 'Dashboard';
 		$data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
 
-		// get user name from session
-		$data['name'] = $this->session->userdata('email');
+		// get user name
+		$data['name'] = $data['user']['nama'];
 
 		// get total data from table
 		$data['total_kegiatan'] = $this->db->get_where('kegiatan')->num_rows();

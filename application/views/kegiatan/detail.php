@@ -1,4 +1,11 @@
 <?php 
+// apabila user belum login
+if ($this->session->userdata('is_login') != 'true') {
+	redirect('auth');
+} 
+
+// get role_id
+$role_id = $this->session->userdata('role_id');
 
 	// mengubah nama hari dari bahas ainggris ke bahasa indonesia
 	$hari = date("l", strtotime($kegiatan->waktu_mulai));
@@ -61,25 +68,20 @@
 		}
 	}
 
-	$file = $kegiatan->file;
-	$fileArray = explode(",", $file);
+	$file_undangan = $kegiatan->file_undangan;
+	$file_materi = $kegiatan->file_materi;
+	$file_metadata = $kegiatan->file_metadata;
 
-	if (!isset($fileArray[0]) || $fileArray[0] == "") {
-		$fileArray[0] = "File belum diunggah!";
-	} else {
-		$fileArray[0] = $fileArray[0];
-	} 
-
-	if (!isset($fileArray[1]) || $fileArray[1] == "") {
-		$fileArray[1] = "File belum diunggah!";
-	} else {
-		$fileArray[1] = $fileArray[1];
+	if ($file_undangan == "") {
+		$file_undangan = "File belum diunggah!";
 	}
 
-	if (!isset($fileArray[2]) || $fileArray[2] == "") {
-		$fileArray[2] = "File belum diunggah!";
-	} else {
-		$fileArray[2] = $fileArray[2];
+	if ($file_materi == "") {
+		$file_materi = "File belum diunggah!";
+	}
+
+	if ($file_metadata == "") {
+		$file_metadata = "File belum diunggah!";
 	}
 ?>
 
@@ -87,12 +89,7 @@
 <div id="layoutSidenav_content">
     <main>
 
-			<div class="flash-data" data-flashdata="<?= $this->session->flashdata('error'); ?>"></div>
-			<?php if ($this->session->flashdata('error')) : ?>
-				<?php unset($_SESSION['error']); ?>
-			<?php endif; ?>
-
-			<div class="flash-data" data-flashdata="<?= $this->session->flashdata('success'); ?>"></div>
+	<div class="flash-data" data-flashdata="<?= $this->session->flashdata('success'); ?>"></div>
 			<?php if ($this->session->flashdata('success')) : ?>
 				<?php unset($_SESSION['success']); ?>
 			<?php endif; ?>
@@ -102,13 +99,14 @@
 				<div class="card-header d-flex justify-content-between align-items-center">
                     <h6 class="m-0"><i class="fas fa-calendar me-1"></i> Detail Jadwal Kegiatan</h6>
 					<div class="d-flex justify-content-between align-items-center">
+						<?php if ($role_id == 1) : ?>
 						<button type="button" class="btn btn-primary btn-sm mr-3" aria-pressed="false" data-toggle="modal" data-target="#ButtonEdit">
 							<i class="fa-solid fa-pen-to-square"></i>
                     	</button>
 						<a href="<?= base_url('kegiatan/delete/'.$kegiatan->id) ?>" class="btn btn-danger btn-sm btn-delete"><i class="fa-solid fa-trash"></i></a>
-
-						</div>
-                	</div>
+						<?php endif; ?>
+					</div>
+                </div>
                 <div class="card-body d-flex flex-column align-items-center">
 					<div class="d-flex flex-column align-items-center w-75">
 						<h2><?= $kegiatan->kegiatan; ?></h2>
@@ -120,7 +118,6 @@
 								</div>
                 				<div class="d-flex flex-column ml-3">
 									<h6 class="mt-2"><?= $kegiatan->tempat; ?></h6>
-									<!-- <p class="text-left">Lorem</p> -->
 								</div>
             				</div>
 							<div class="d-flex flex-row align-items-center">
@@ -154,13 +151,13 @@
 									</div>
                 					<div class="d-flex flex-column ml-3" >
 										<h6 class="mt-3" >Surat Undangan</h6>
-										<p class="text-left" ><?= $fileArray[0]; ?></p>
+										<p class="text-left" ><?= $file_undangan; ?></p>
 									</div>
 								</div>
 								<div class="d-flex flex-row align-items-center">
-								<?php if ($fileArray[0] !== "File belum diunggah!") { ?>
-									<a href="" class="btn btn-sm btn-primary btn-download mr-2"><i class="fa-solid fa-eye fa-sm"></i></a>
-									<a href="<?= base_url('kegiatan/download_0/'.$kegiatan->id.'/'.$fileArray[0]) ?>" class="btn btn-sm btn-success btn-download ml-2"><i class="fa-solid fa-download fa-sm"></i></a>
+								<?php if ($file_undangan !== "File belum diunggah!") { ?>
+									<a href="javascript:void(0);" class="btn btn-sm btn-primary btn-open-preview mr-2" data-toggle="modal" data-target="#previewUndangan"><i class="fa-solid fa-eye fa-sm"></i></a>
+									<a href="<?= base_url('kegiatan/download/'.$kegiatan->id.'/'.$file_undangan) ?>" class="btn btn-sm btn-success btn-download ml-2"><i class="fa-solid fa-download fa-sm"></i></a>
 								<?php } ?>
 								</div>
 							</div>
@@ -174,13 +171,13 @@
 									</div>
                 					<div class="d-flex flex-column ml-3">
 										<h6 class="mt-3">File Materi</h6>
-										<p class="text-left"><?= $fileArray[1]; ?></p>
+										<p class="text-left"><?= $file_materi; ?></p>
 									</div>
 								</div>
 								<div class="d-flex flex-row align-items-center">
-								<?php if ($fileArray[1] !== "File belum diunggah!") { ?>
-									<a href="" class="btn btn-sm btn-primary btn-download mr-2"><i class="fa-solid fa-eye fa-sm"></i></a>
-									<a href="<?= base_url('kegiatan/download_1/'.$kegiatan->id.'/'.$fileArray[1]) ?>" class="btn btn-sm btn-success btn-download ml-2"><i class="fa-solid fa-download fa-sm"></i></a>
+								<?php if ($file_materi !== "File belum diunggah!") { ?>
+									<a href="javascript:void(0);" class="btn btn-sm btn-primary btn-open-preview mr-2" data-toggle="modal" data-target="#previewMateri"><i class="fa-solid fa-eye fa-sm"></i></a>
+									<a href="<?= base_url('kegiatan/download/'.$kegiatan->id.'/'.$file_materi) ?>" class="btn btn-sm btn-success btn-download ml-2"><i class="fa-solid fa-download fa-sm"></i></a>
 								<?php } ?>
 								</div>
 							</div>
@@ -194,13 +191,13 @@
 									</div>
                 					<div class="d-flex flex-column ml-3">
 										<h6 class="mt-3">File Metadata</h6>
-										<p class="text-left"><?= $fileArray[2]; ?></p>
+										<p class="text-left"><?= $file_metadata; ?></p>
 									</div>
 								</div>
 								<div class="d-flex flex-row align-items-center">
-								<?php if ($fileArray[2] !== "File belum diunggah!") { ?>
-									<a href="" class="btn btn-sm btn-primary btn-download mr-2"><i class="fa-solid fa-eye fa-sm"></i></a>
-									<a href="<?= base_url('kegiatan/download_2/'.$kegiatan->id.'/'.$fileArray[2]) ?>" class="btn btn-sm btn-success btn-download ml-2"><i class="fa-solid fa-download fa-sm"></i></a>
+								<?php if ($file_metadata !== "File belum diunggah!") { ?>
+									<a href="javascript:void(0);" class="btn btn-sm btn-primary btn-open-preview mr-2" data-toggle="modal" data-target="#previewMetadata"><i class="fa-solid fa-eye fa-sm"></i></a>
+									<a href="<?= base_url('kegiatan/download/'.$kegiatan->id.'/'.$file_metadata) ?>" class="btn btn-sm btn-success btn-download ml-2"><i class="fa-solid fa-download fa-sm"></i></a>
 								<?php } ?>
 								</div>
 							</div>
@@ -215,6 +212,7 @@
 </div>
 </div>
 
+<!-- Modal Edit -->
 <div class="modal fade" id="ButtonEdit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered" role="document">
 		<div class="modal-content">
@@ -234,7 +232,9 @@
 					<div class="row">
 						<div class="col-md-6">
 							<input class="form-control" type="hidden" id="id" name="id" value="<?= $kegiatan->id ?>"/>
-							<input class="form-control" type="hidden" id="old_file[]" name="old_file[]" value="<?= $kegiatan->file ?>" required/>
+							<input class="form-control" type="hidden" id="old_file_undangan" name="old_file_undangan" value="<?= $kegiatan->file_undangan ?>"/>
+							<input class="form-control" type="hidden" id="old_file_materi" name="old_file_materi" value="<?= $kegiatan->file_materi ?>"/>
+							<input class="form-control" type="hidden" id="old_file_metadata" name="old_file_metadata" value="<?= $kegiatan->file_metadata ?>"/>
 							<div class="form-group">
 								<label for="kegiatan" class="col-form-label">Kegiatan</label>
 								<input type="text" class="form-control" id="kegiatan" name="kegiatan" value="<?= $kegiatan->kegiatan ?>" required/>
@@ -262,7 +262,7 @@
 									<select name="color" class="form-control" id="color">
 									<?php
 											$colorOptions = [
-												'#0071c5' => 'Blue',
+												'#0071c5' => 'Biru',
 												'#008000' => 'Hijau',
 												'#FFD700' => 'Yellow',
 												'#FF8C00' => 'Orange',
@@ -281,16 +281,16 @@
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="file[]" class="col-form-label">File Undangan</label>
-						<input type="file" class="form-control" id="file[]" name="file[]" accept=".pdf, .doc, .docx"/>
+						<label for="file_undangan" class="col-form-label">File Undangan</label>
+						<input type="file" class="form-control" id="file_undangan" name="file_undangan" accept=".pdf"/>
 					</div>
 					<div class="form-group">
-						<label for="file[]" class="col-form-label">File Materi</label>
-						<input type="file" class="form-control" id="file[]" name="file[]" accept=".pptx, .ppt, .pdf"/>
+						<label for="file_materi" class="col-form-label">File Materi</label>
+						<input type="file" class="form-control" id="file_materi" name="file_materi" accept=".pptx, .ppt, .pdf"/>
 					</div>
 					<div class="form-group">
-						<label for="file[]" class="col-form-label">File Metadata</label>
-						<input type="file" class="form-control" id="file[]" name="file[]" accept=".xls, .xlsx, .csv"/>
+						<label for="file_metadata" class="col-form-label">File Metadata</label>
+						<input type="file" class="form-control" id="file_metadata" name="file_metadata" accept=".xls, .xlsx, .csv"/>
 					</div>
 					<div class="d-flex align-items-center justify-content-center mt-3 mb-0">
 						<button type="submit" class="btn btn-primary btn-user btn-block">Update</button>
@@ -299,4 +299,53 @@
 			</div>
 		</div>
 	</div>
+</div>
+
+<!-- Modal preview -->
+<div class="modal fade" id="previewUndangan" tabindex="-1" role="dialog" aria-labelledby="previewModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="previewModalLabel">Preview File</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <iframe src="<?= base_url('upload/internal/'.$file_undangan) ?>" style="width: 100%; height: 500px;"></iframe>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="previewMateri" tabindex="-1" role="dialog" aria-labelledby="previewModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="previewModalLabel">Preview File</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <iframe src="https://docs.google.com/gview?url=<?= base_url('upload/internal/'.$file_materi) ?>" style="width: 100%; height: 500px;"></iframe>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="previewMetadata" tabindex="-1" role="dialog" aria-labelledby="previewModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="previewModalLabel">Preview File</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <iframe src="https://docs.google.com/gview?url=<?= base_url('upload/internal/'.$file_metadata) ?>" style="width: 100%; height: 500px;"></iframe>
+            </div>
+        </div>
+    </div>
 </div>

@@ -1,3 +1,9 @@
+<?php 
+// apabila user belum login
+if ($this->session->userdata('is_login') != 'true') {
+	redirect('auth');
+} 
+?>
 
 <style>
     #datatablesSimple th, td {
@@ -22,9 +28,9 @@
             <div class="card mb-4 mt-4">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <h6 class="m-0"><i class="fas fa-folder me-1"></i> File Metadata</h6>
-                    <button type="button" class="btn btn-primary btn-sm" aria-pressed="false" data-toggle="modal" data-target="#UploadModal">
+                    <!-- <button type="button" class="btn btn-primary btn-sm" aria-pressed="false" data-toggle="modal" data-target="#UploadModal">
 					<h6 class="m-0"><i class="fas fa-plus me-1"></i> Tambah File</h6>
-                    </button>
+                    </button> -->
                 </div>
                 <div class="card-body">
                     <table id="datatablesSimple">
@@ -49,23 +55,23 @@
                             </tr>
                         </tfoot>
                         <tbody>
-                            <?php $no = 1;
+						<?php $no = 1;
                             foreach ($metadata as $row) : ?>
+							<?php if (!empty($row->file_metadata)) : ?>
                                 <tr>
                                     <td><?= $no; ?></td>
-                                    <td><?= $row->file; ?></td>
+                                    <td><?= $row->file_metadata; ?></td>
                                     <td><?= $row->kegiatan; ?></td>
                                     <td><?= $row->tema; ?></td>
-                                    <td><?= $row->tanggal; ?></td>
+                                    <td><?= date('j F Y', strtotime($row->waktu_mulai)); ?></td>
                                     <td>
 										<div class="d-flex justify-content-around">
-											<a href="<?= base_url('metadata/edit/'.$row->id) ?>" class="btn btn-sm btn-primary"><i class="fa-solid fa-pen-to-square"></i></a>
-											<a href="<?= base_url('metadata/delete/'.$row->id) ?>" class="btn btn-sm btn-danger btn-delete"><i class="fa-solid fa-trash"></i></a>
 											<a href="<?= base_url('metadata/download/'.$row->id) ?>" class="btn btn-sm btn-success btn-download"><i class="fa-solid fa-file-arrow-down"></i></a>
 										</div>
 									</td>
                                 <?php $no++;
-                            endforeach; ?>
+								endif; ?>
+                            <?php endforeach; ?>
                                 </tr>
                         </tbody>
                     </table>

@@ -1,3 +1,9 @@
+<?php 
+// apabila user belum login
+if ($this->session->userdata('is_login') != 'true') {
+	redirect('auth');
+} 
+?>
 
 <style>
     #datatablesSimple th, td {
@@ -22,9 +28,9 @@
             <div class="card mb-4 mt-4">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <h6 class="m-0"><i class="fas fa-folder me-1"></i> File Internal</h6>
-                    <button type="button" class="btn btn-primary btn-sm" aria-pressed="false" data-toggle="modal" data-target="#UploadModal">
+                    <!-- <button type="button" class="btn btn-primary btn-sm" aria-pressed="false" data-toggle="modal" data-target="#UploadModal">
 					<h6 class="m-0"><i class="fas fa-plus me-1"></i> Tambah File</h6>
-                    </button>
+                    </button> -->
                 </div>
                 <div class="card-body">
                     <table id="datatablesSimple">
@@ -51,21 +57,20 @@
                         <tbody>
                             <?php $no = 1;
                             foreach ($internal as $row) : ?>
+							<?php if (!empty($row->file_materi)) : ?>
                                 <tr>
                                     <td><?= $no; ?></td>
-                                    <td><?= $row->file; ?></td>
+                                    <td><?= $row->file_materi; ?></td>
                                     <td><?= $row->kegiatan; ?></td>
                                     <td><?= $row->tema; ?></td>
-                                    <td><?= $row->tanggal; ?></td>
-                                    <td>
-										<div class="d-flex justify-content-around">
-											<a href="<?= base_url('internal/edit/'.$row->id) ?>" class="btn btn-sm btn-primary"><i class="fa-solid fa-pen-to-square"></i></a>
-											<a href="<?= base_url('internal/delete/'.$row->id) ?>" class="btn btn-sm btn-danger btn-delete"><i class="fa-solid fa-trash"></i></a>
-											<a href="<?= base_url('internal/download/'.$row->id) ?>" class="btn btn-sm btn-success btn-download"><i class="fa-solid fa-file-arrow-down"></i></a>
-										</div>
+                                    <td><?= date('j F Y', strtotime($row->waktu_mulai)); ?></td>
+                                    <td class="d-flex flex-row align-items-center justify-between">
+										<a href="javascript:void(0);" class="btn btn-sm btn-primary btn-open-preview mr-2" data-toggle="modal" data-target="#previewMateri"><i class="fa-solid fa-eye fa-sm"></i></a>
+										<a href="<?= base_url('kegiatan/download/'.$row->id.'/'.$row->file_materi) ?>" class="btn btn-sm btn-success btn-download ml-2"><i class="fa-solid fa-download fa-sm"></i></a>
 									</td>
                                 <?php $no++;
-                            endforeach; ?>
+								endif; ?>
+                            <?php endforeach; ?>
                                 </tr>
                         </tbody>
                     </table>
@@ -77,65 +82,21 @@
 </div>
 
 
-<!-- modal for upload file -->
-<div class="modal fade" id="UploadModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	<div class="modal-dialog modal-dialog-centered" role="document">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h5 class="modal-title" id="exampleModalLabel">Tambah File Internal</h5>
-				<button
-					type="button"
-					class="close"
-					data-dismiss="modal"
-					aria-label="Close"
-				>
-					<span aria-hidden="true">&times;</span>
-				</button>
-			</div>
-			<div class="modal-body">
-					<form action="<?= base_url('internal/add') ?>" method="post" enctype="multipart/form-data" id="add">
-								<div class="form-group">
-									<label for="kegiatan">Kegiatan</label>
-									<input class="form-control <?= form_error('kegiatan') ? 'is-invalid' : '' ?>" type="text" id="kegiatan" name="kegiatan" placeholder="Kegiatan" />
-									<div class="invalid-feedback">
-										<?= form_error('kegiatan') ?>
-									</div>
-								</div>
-								<div class="form-group">
-									<label for="tema">Tema</label>
-									<input class="form-control <?= form_error('tema') ? 'is-invalid' : '' ?>" type="text" id="tema" name="tema" placeholder="Tema" />
-									<div class="invalid-feedback">
-										<?= form_error('tema') ?>
-									</div>
-								</div>
-								<div class="form-group">
-									<label for="tempat">Tempat</label>
-									<input class="form-control <?= form_error('tempat') ? 'is-invalid' : '' ?>" type="text" id="tempat" name="tempat" placeholder="Tempat" />
-									<div class="invalid-feedback">
-										<?= form_error('tempat') ?>
-									</div>
-								</div>
-								<div class="form-group">
-									<label for="tanggal">Tanggal</label>
-									<input class="form-control <?= form_error('tanggal') ? 'is-invalid' : '' ?>" type="date" id="tanggal" name="tanggal" placeholder="Tanggal" />
-									<div class="invalid-feedback">
-										<?= form_error('tanggal') ?>
-									</div>
-								</div>
-								<div class="form-group">
-									<label for="file">File</label>
-									<input class="form-control <?= form_error('file') ? 'is-invalid' : '' ?>" type="file" id="file" name="file" placeholder="File" />
-									<div class="invalid-feedback">
-										<?= form_error('file') ?>
-									</div>
-								</div>
-						<div class="d-flex align-items-center justify-content-center mt-5 mb-0">
-							<button type="submit" class="btn btn-primary btn-user btn-block">Tambah</button>
-                    	</div>
-					</form>
-			</div>
-		</div>
-	</div>
+<!-- Modal Preview Materi -->
+<div class="modal fade" id="previewMateri" tabindex="-1" role="dialog" aria-labelledby="previewModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="previewModalLabel">Preview File</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <iframe src="<?= base_url('upload/internal/'.$internal->file_materi) ?>" style="width: 100%; height: 500px;"></iframe>
+            </div>
+        </div>
+    </div>
 </div>
 
 

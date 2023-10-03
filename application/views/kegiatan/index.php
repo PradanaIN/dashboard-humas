@@ -1,3 +1,13 @@
+<?php 
+// apabila user belum login
+if ($this->session->userdata('is_login') != 'true') {
+	redirect('auth');
+} 
+
+// get role_id
+$role_id = $this->session->userdata('role_id');
+
+?>
 
 <div id="layoutSidenav_content">
     <main>
@@ -11,9 +21,11 @@
             <div class="card mt-2">
 				<div class="card-header d-flex justify-content-between align-items-center">
                     <h6 class="m-0"><i class="fas fa-calendar me-1"></i> Jadwal Kegiatan</h6>
+					<?php if ($role_id == 1) : ?>
                     <button type="button" class="btn btn-primary btn-sm" aria-pressed="false" data-toggle="modal" data-target="#UploadModal">
 					<h6 class="m-0"><i class="fas fa-plus me-1"></i> Tambah Jadwal</h6>
                     </button>
+					<?php endif; ?>
                 </div>
                 <div class="card-body">
 					<div id='calendar'></div>
@@ -78,16 +90,16 @@
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="file[]" class="col-form-label">File Undangan</label>
-						<input type="file" class="form-control" id="file[]" name="file[]" accept=".pdf, .doc, .docx"/>
+						<label for="file_undangan" class="col-form-label">File Undangan</label>
+						<input type="file" class="form-control" id="file_undangan" name="file_undangan" accept=".pdf, .doc, .docx"/>
 					</div>
 					<div class="form-group">
-						<label for="file[]" class="col-form-label">File Materi</label>
-						<input type="file" class="form-control" id="file[]" name="file[]" accept=".pptx, .ppt, .pdf"/>
+						<label for="file_materi" class="col-form-label">File Materi</label>
+						<input type="file" class="form-control" id="file_materi" name="file_materi" accept=".pptx, .ppt, .pdf"/>
 					</div>
 					<div class="form-group">
-						<label for="file[]" class="col-form-label">File Metadata</label>
-						<input type="file" class="form-control" id="file[]" name="file[]" accept=".xls, .xlsx, .csv"/>
+						<label for="file_metadata" class="col-form-label">File Metadata</label>
+						<input type="file" class="form-control" id="file_metadata" name="file_metadata" accept=".xls, .xlsx, .csv"/>
 					</div>
 					<div class="d-flex align-items-center justify-content-center mt-3 mb-0">
 						<button type="submit" class="btn btn-primary btn-user btn-block">Tambah</button>

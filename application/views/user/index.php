@@ -1,3 +1,9 @@
+<?php 
+// apabila user belum login
+if ($this->session->userdata('is_login') != 'true') {
+	redirect('auth');
+} 
+?>
 
 <style>
     #datatablesSimple th, td {
