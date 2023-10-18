@@ -2,6 +2,7 @@
 
 // get user role_id
 $role_id = $this->session->userdata('role_id');
+$name = $this->session->userdata('name');
 
 ?>
 
@@ -14,7 +15,7 @@ $role_id = $this->session->userdata('role_id');
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-	<title>Badan Pusat Statistik</title>
+	<title>BPS Provinsi Jawa Tengah</title>
 	<link rel="icon" href="<?= base_url('assets/'); ?>img/logo.png" type="image/gif" sizes="25x25">
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
     <link href="<?= base_url('assets/dist/') ?>css/styles.css" rel="stylesheet" />
@@ -35,9 +36,14 @@ $role_id = $this->session->userdata('role_id');
 
         <ul class="navbar-nav ms-auto">
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
+                <a class="nav-link" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+					<div class="d-flex flex-row justify-content- mt-2">
+						<i class="fas fa-user fa-fw" style="margin-right: 10px;"></i>
+						<h6><?= $name ?></h6>
+					</div>
+				</a>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                    <li><a class="dropdown-item btn-logout" href="<?= base_url('auth/logout') ?>">Logout</a></li>
+                    <li><a class="dropdown-item btn-logout text-center" href="<?= base_url('auth/logout') ?>">Logout</a></li>
                 </ul>
             </li>
         </ul>
@@ -47,17 +53,20 @@ $role_id = $this->session->userdata('role_id');
             <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                 <div class="sb-sidenav-menu">
 				<div class="nav">
-					<div class="sb-sidenav-menu-heading">Main</div>
-					<a class="nav-link" href="<?= base_url('dashboard') ?>">
-						<div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-							Dashboard
-					</a>
 
 					<?php
+					// Menampilkan menu Dashboard untuk Admin
+					if ($role_id == 1) {
+						echo '<div class="sb-sidenav-menu-heading">Main</div>';
+						echo '<a class="nav-link" href="' . base_url('dashboard') . '">';
+						echo '<div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>';
+						echo 'Dashboard</a>';
+					}
+
 
 					// Menampilkan menu Kegiatan hanya untuk Admin dan Kepala
 					if ($role_id == 1 || $role_id == 2) {
-						echo '<div class="sb-sidenav-menu-heading">Kegiatan</div>';
+						echo '<div class="sb-sidenav-menu-heading">Schedule</div>';
 						echo '<a class="nav-link" href="' . base_url('kegiatan') . '">';
 						echo '<div class="sb-nav-link-icon"><i class="fas fa-calendar"></i></div>';
 						echo 'Kalender</a>';
@@ -83,20 +92,14 @@ $role_id = $this->session->userdata('role_id');
 						echo '<div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">';
 						echo '<nav class="sb-sidenav-menu-nested nav">';
 						echo '<a class="nav-link" href="' . base_url('internal') . '">Internal</a>';
+						echo '<a class="nav-link" href="' . base_url('metadata') . '">Metadata</a>';
 						echo '</nav>';
 						echo '</div>';
 					}
 
-					// Menampilkan menu Profile untuk Admin, Kepala, dan User
-					if ($role_id == 1 || $role_id == 2 || $role_id == 3) {
-						echo '<div class="sb-sidenav-menu-heading">Others</div>';
-						echo '<a class="nav-link" href="' . base_url('profile') . '">';
-						echo '<div class="sb-nav-link-icon"><i class="fas fa-user"></i></div>';
-						echo 'Profile</a>';
-					}
-
 					// Menampilkan menu User hanya untuk Admin
 					if ($role_id == 1) {
+						echo '<div class="sb-sidenav-menu-heading">Others</div>';
 						echo '<a class="nav-link" href="' . base_url('user') . '">';
 						echo '<div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>';
 						echo 'User</a>';

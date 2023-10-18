@@ -60,13 +60,18 @@ if ($this->session->userdata('is_login') != 'true') {
 							<?php if (!empty($row->file_metadata)) : ?>
                                 <tr>
                                     <td><?= $no; ?></td>
-                                    <td><?= $row->file_metadata; ?></td>
+									<!-- if file name too long, cut it -->
+									<?php if (strlen($row->file_metadata) >= 50) : ?>
+										<td><?= substr($row->file_metadata, 0, 50) . '...'; ?></td>
+									<?php else : ?>
+										<td><?= $row->file_metadata; ?></td>
+									<?php endif; ?>
                                     <td><?= $row->kegiatan; ?></td>
                                     <td><?= $row->tema; ?></td>
                                     <td><?= date('j F Y', strtotime($row->waktu_mulai)); ?></td>
                                     <td>
 										<div class="d-flex justify-content-around">
-											<a href="<?= base_url('metadata/download/'.$row->id) ?>" class="btn btn-sm btn-success btn-download"><i class="fa-solid fa-file-arrow-down"></i></a>
+											<a href="<?= base_url('metadata/download/'.$row->id) ?>" class="btn btn-sm btn-success btn-download"><i class="fa-solid fa-download fa-sm"></i></a>
 										</div>
 									</td>
                                 <?php $no++;

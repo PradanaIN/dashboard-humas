@@ -83,6 +83,19 @@ $role_id = $this->session->userdata('role_id');
 	if ($file_metadata == "") {
 		$file_metadata = "File belum diunggah!";
 	}
+
+	// if the file name too long, cut it
+	if (strlen($file_undangan) >= 50) {
+		$file_undangan = substr($file_undangan, 0, 50) . "...";
+	} 
+
+	if (strlen($file_materi) >= 50) {
+		$file_materi = substr($file_materi, 0, 50) . "...";
+	}
+
+	if (strlen($file_metadata) >= 50) {
+		$file_metadata = substr($file_metadata, 0, 50) . "...";
+	}
 ?>
 
 
@@ -157,7 +170,7 @@ $role_id = $this->session->userdata('role_id');
 								<div class="d-flex flex-row align-items-center">
 								<?php if ($file_undangan !== "File belum diunggah!") { ?>
 									<a href="javascript:void(0);" class="btn btn-sm btn-primary btn-open-preview mr-2" data-toggle="modal" data-target="#previewUndangan"><i class="fa-solid fa-eye fa-sm"></i></a>
-									<a href="<?= base_url('kegiatan/download/'.$kegiatan->id.'/'.$file_undangan) ?>" class="btn btn-sm btn-success btn-download ml-2"><i class="fa-solid fa-download fa-sm"></i></a>
+									<a href="<?= base_url('kegiatan/download/'.$kegiatan->id.'/'.$kegiatan->file_undangan) ?>" class="btn btn-sm btn-success btn-download ml-2"><i class="fa-solid fa-download fa-sm"></i></a>
 								<?php } ?>
 								</div>
 							</div>
@@ -177,7 +190,7 @@ $role_id = $this->session->userdata('role_id');
 								<div class="d-flex flex-row align-items-center">
 								<?php if ($file_materi !== "File belum diunggah!") { ?>
 									<a href="javascript:void(0);" class="btn btn-sm btn-primary btn-open-preview mr-2" data-toggle="modal" data-target="#previewMateri"><i class="fa-solid fa-eye fa-sm"></i></a>
-									<a href="<?= base_url('kegiatan/download/'.$kegiatan->id.'/'.$file_materi) ?>" class="btn btn-sm btn-success btn-download ml-2"><i class="fa-solid fa-download fa-sm"></i></a>
+									<a href="<?= base_url('kegiatan/download/'.$kegiatan->id.'/'.$kegiatan->file_materi) ?>" class="btn btn-sm btn-success btn-download ml-2"><i class="fa-solid fa-download fa-sm"></i></a>
 								<?php } ?>
 								</div>
 							</div>
@@ -197,7 +210,7 @@ $role_id = $this->session->userdata('role_id');
 								<div class="d-flex flex-row align-items-center">
 								<?php if ($file_metadata !== "File belum diunggah!") { ?>
 									<a href="javascript:void(0);" class="btn btn-sm btn-primary btn-open-preview mr-2" data-toggle="modal" data-target="#previewMetadata"><i class="fa-solid fa-eye fa-sm"></i></a>
-									<a href="<?= base_url('kegiatan/download/'.$kegiatan->id.'/'.$file_metadata) ?>" class="btn btn-sm btn-success btn-download ml-2"><i class="fa-solid fa-download fa-sm"></i></a>
+									<a href="<?= base_url('kegiatan/download/'.$kegiatan->id.'/'.$kegiatan->file_metadata) ?>" class="btn btn-sm btn-success btn-download ml-2"><i class="fa-solid fa-download fa-sm"></i></a>
 								<?php } ?>
 								</div>
 							</div>
@@ -264,8 +277,7 @@ $role_id = $this->session->userdata('role_id');
 											$colorOptions = [
 												'#0071c5' => 'Biru',
 												'#008000' => 'Hijau',
-												'#FFD700' => 'Yellow',
-												'#FF8C00' => 'Orange',
+												'#FFD700' => 'Kuning',
 												'#FF0000' => 'Red'
 											];
 
@@ -312,7 +324,7 @@ $role_id = $this->session->userdata('role_id');
                 </button>
             </div>
             <div class="modal-body">
-                <iframe src="<?= base_url('upload/internal/'.$file_undangan) ?>" style="width: 100%; height: 500px;"></iframe>
+                <iframe src="<?= base_url('upload/internal/'.$kegiatan->file_undangan) ?>" style="width: 100%; height: 500px;"></iframe>
             </div>
         </div>
     </div>
@@ -328,7 +340,7 @@ $role_id = $this->session->userdata('role_id');
                 </button>
             </div>
             <div class="modal-body">
-                <iframe src="https://docs.google.com/gview?url=<?= base_url('upload/internal/'.$file_materi) ?>" style="width: 100%; height: 500px;"></iframe>
+                <iframe src="https://docs.google.com/gview?url=<?= base_url('upload/internal/'.$kegiatan->file_materi) ?>" style="width: 100%; height: 500px;"></iframe>
             </div>
         </div>
     </div>
@@ -344,7 +356,7 @@ $role_id = $this->session->userdata('role_id');
                 </button>
             </div>
             <div class="modal-body">
-                <iframe src="https://docs.google.com/gview?url=<?= base_url('upload/internal/'.$file_metadata) ?>" style="width: 100%; height: 500px;"></iframe>
+                <iframe src="https://docs.google.com/gview?url=<?= base_url('upload/internal/'.$kegiatan->file_metadata) ?>" style="width: 100%; height: 500px;"></iframe>
             </div>
         </div>
     </div>

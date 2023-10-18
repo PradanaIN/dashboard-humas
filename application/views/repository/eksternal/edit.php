@@ -10,7 +10,7 @@
 							<div class="card-body">
 								<form action="" method="post" enctype="multipart/form-data" >
 									<div class="row">
-										<div class="col-md-6">
+										<div class="col">
 										<input class="form-control" type="hidden" id="id" name="id" value="<?= $eksternal->id ?>"/>
 										<input class="form-control" type="hidden" id="old_file" name="old_file" value="<?= $eksternal->file ?>"/>
 											<div class="form-group">
@@ -50,9 +50,7 @@
 											</div>
 										</div>
 									</div>
-									<button class="btn btn-success mt-3" type="submit" name="btn">
-											Edit
-									</button>
+									<button class="btn btn-primary mt-3 btn-block" type="submit" name="btn">Edit File</button>
 								</form>	
                         </div>
                     </div>

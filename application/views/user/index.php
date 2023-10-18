@@ -29,7 +29,7 @@ if ($this->session->userdata('is_login') != 'true') {
             <div class="card mb-4 mt-3">
 				<div class="card-header d-flex justify-content-between align-items-center">
                     <h6 class="m-0"><i class="fas fa-list me-1"></i> Daftar User</h6>
-                    <button type="button" class="btn btn-primary btn-sm" aria-pressed="false" data-toggle="modal" data-target="#UploadModal">
+                    <button type="button" class="btn btn-primary btn-sm" aria-pressed="false" data-toggle="modal" data-target="#ButtonAdd">
 					<h6 class="m-0"><i class="fas fa-plus me-1"></i> Tambah User</h6>
                     </button>
                 </div>
@@ -84,7 +84,66 @@ if ($this->session->userdata('is_login') != 'true') {
 
 
 <!-- modal for register/add user -->
-<div class="modal fade" id="UploadModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="ButtonAdd" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">Tambah User Baru</h5>
+				<button
+					type="button"
+					class="close"
+					data-dismiss="modal"
+					aria-label="Close"
+				>
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<form method="post" enctype="multipart/form-data" id="add" action="<?= base_url('user/add') ?>">
+					<div class="row">
+						<div class="col">
+							<div class="form-group">
+								<label for="nama" class="col-form-label">Nama</label>
+								<input type="text" class="form-control" id="nama" name="nama" required/>
+							</div>
+							<div class="form-group">
+								<label for="email" class="col-form-label">Email</label>
+								<input type="text" class="form-control <?= form_error('email') ? 'is-invalid' : '' ?>" id="email" name="email" required/>
+								<div class="invalid-feedback">
+									<?= form_error('email') ?>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="role" class="col-form-label">Role</label>
+								<select class="form-control" id="role" name="role" required>
+									<option value="">-- Pilih Role --</option>
+									<option value="1">Admin</option>
+									<option value="2">Kepala</option>
+									<option value="3">User</option>
+								</select>
+							</div>
+							<div class="form-group">
+								<label for="password" class="col-form-label">Password</label>
+								<div class="input-group">
+									<input type="password" class="form-control" id="password" name="password" required/>
+										<div class="input-group-append">
+											<span class="input-group-text">
+												<i id="togglePassword" class="fa fa-eye-slash" onclick="togglePassword()"></i>
+											</span>
+										</div>
+								</div>
+							</div>
+							<div class="d-flex align-items-center justify-content-center mt-3 mb-0">
+								<button type="submit" class="btn btn-primary btn-user btn-block">Tambah</button>
+							</div>
+						</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="ButtonEdit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered" role="document">
 		<div class="modal-content">
 			<div class="modal-header">

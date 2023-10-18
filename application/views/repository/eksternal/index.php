@@ -69,16 +69,24 @@ $role_id = $this->session->userdata('role_id');
 									<?php if ($row->file == "<p>You did not select a file to upload.</p>") : ?>
 										<td>File belum diunggah!</td>
 									<?php else : ?>
-										<td><?= $row->file; ?></td>
+										<!-- if file name too long, cut it -->
+										<?php if (strlen($row->file) >= 50) : ?>
+											<td><?= substr($row->file, 0, 50) . '...'; ?></td>
+										<?php else : ?>
+											<td><?= $row->file; ?></td>
+										<?php endif; ?>
 									<?php endif; ?>
                                     <td><?= $row->kegiatan; ?></td>
                                     <td><?= $row->tema; ?></td>
                                     <td><?= $row->tanggal; ?></td>
                                     <td>
 										<div class="d-flex justify-content-around">
+										<?php if ($role_id == 1) { ?>
 											<a href="<?= base_url('eksternal/edit/'.$row->id) ?>" class="btn btn-sm btn-primary"><i class="fa-solid fa-pen-to-square"></i></a>
 											<a href="<?= base_url('eksternal/delete/'.$row->id) ?>" class="btn btn-sm btn-danger btn-delete"><i class="fa-solid fa-trash"></i></a>
-											<a href="<?= base_url('eksternal/download/'.$row->id) ?>" class="btn btn-sm btn-success btn-download"><i class="fa-solid fa-file-arrow-down"></i></a>
+										<?php } ?>
+											<!-- <a href="javascript:void(0);" class="btn btn-sm btn-primary btn-open-preview" data-toggle="modal" data-target="#previewMateri"><i class="fa-solid fa-eye fa-sm"></i></a> -->
+											<a href="<?= base_url('eksternal/download/'.$row->id) ?>" class="btn btn-sm btn-success btn-download"><i class="fa-solid fa-download fa-sm"></i></a>
 										</div>
 									</td>
                                 <?php $no++;
@@ -156,3 +164,19 @@ $role_id = $this->session->userdata('role_id');
 </div>
 
 
+<!-- Modal Preview Materi -->
+<div class="modal fade" id="previewMateri" tabindex="-1" role="dialog" aria-labelledby="previewModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="previewModalLabel">Preview File</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <iframe src="<?= base_url('upload/eksternal/'.$eksternal->file) ?>" style="width: 100%; height: 500px;"></iframe>
+            </div>
+        </div>
+    </div>
+</div>

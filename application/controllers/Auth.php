@@ -51,28 +51,36 @@ class Auth extends CI_Controller {
 					$data = [
 						'email' => $user['email'],
 						'role_id' => $user['role_id'],
-						'name' => $user['name'],
-						'image' => $user['image'],
+						'name' => $user['nama'],
 						'is_login' => 'true'
 					];
 
 					$this->session->set_userdata($data);
 
-					// redirect to dashboard
-					redirect('dashboard');
+					if ($user['role_id'] == 1) {
+						// if user is admin
+						redirect('dashboard');
+					} if ($user['role_id'] == 2) {
+						// if user is kepala
+						redirect('kegiatan');
+					} else {
+						// if user is user
+						redirect('internal');
+					} 
+
 				} else {
 					// if password is incorrect
-					$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Password salah!</div>');
+					$this->session->set_flashdata('message', 'Password salah!');
 					redirect('auth');
 				}
 			} else {
 				// if user is not active
-				$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Email belum diaktivasi!</div>');
+				$this->session->set_flashdata('message', 'Email belum diaktivasi!');
 				redirect('auth');
 			}
 		} else {
 			// if user doesn't exists
-			$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Email salah!</div>');
+			$this->session->set_flashdata('message', 'Email tidak terdaftar!');
 			redirect('auth');
 		}
 	}
@@ -86,8 +94,6 @@ class Auth extends CI_Controller {
 		// destroy session
 		$this->session->sess_destroy();
 
-		// set flashdata
-		$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Berhasil logout!</div>');
 		redirect('auth');
 	}
 }

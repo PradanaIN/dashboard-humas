@@ -60,12 +60,17 @@ if ($this->session->userdata('is_login') != 'true') {
 							<?php if (!empty($row->file_materi)) : ?>
                                 <tr>
                                     <td><?= $no; ?></td>
-                                    <td><?= $row->file_materi; ?></td>
+									<!-- if file name too long, cut it -->
+									<?php if (strlen($row->file_materi) >= 50) : ?>
+										<td><?= substr($row->file_materi, 0, 50).'...'; ?></td>
+									<?php else : ?>
+										<td><?= $row->file_materi; ?></td>
+									<?php endif; ?>
                                     <td><?= $row->kegiatan; ?></td>
                                     <td><?= $row->tema; ?></td>
                                     <td><?= date('j F Y', strtotime($row->waktu_mulai)); ?></td>
                                     <td class="d-flex flex-row align-items-center justify-between">
-										<a href="javascript:void(0);" class="btn btn-sm btn-primary btn-open-preview mr-2" data-toggle="modal" data-target="#previewMateri"><i class="fa-solid fa-eye fa-sm"></i></a>
+										<!-- <a href="javascript:void(0);" class="btn btn-sm btn-primary btn-open-preview mr-2" data-toggle="modal" data-target="#previewMateri"><i class="fa-solid fa-eye fa-sm"></i></a> -->
 										<a href="<?= base_url('kegiatan/download/'.$row->id.'/'.$row->file_materi) ?>" class="btn btn-sm btn-success btn-download ml-2"><i class="fa-solid fa-download fa-sm"></i></a>
 									</td>
                                 <?php $no++;
