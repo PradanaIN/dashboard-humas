@@ -10,7 +10,7 @@
 ### File Serah Terima
 
 1. Folder [Dashboard Humas IPDS](https://github.com/PradanaIN/dashboard-humas-ipds.git) yang merupakan source code aplikasi
-2. Database [https://github.com/PradanaIN/dashboard-humas-ipds/blob/main/dashboard_humas_ipds.sql) yang merupakan dump database aplikasi
+2. Database [dashboard_humas_ipds.sql](https://github.com/PradanaIN/dashboard-humas-ipds/blob/main/dashboard_humas_ipds.sql) yang merupakan dump database aplikasi
 
 ### Developer
 ```
